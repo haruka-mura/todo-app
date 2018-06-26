@@ -3,6 +3,8 @@ class Task < ApplicationRecord
   validates :description, presence: true, length: { maximum: 10000 }
   validates :state, presence: true
 
+  has_one :task_due_date
+  has_one :completion_date
   belongs_to :user
   belongs_to :team
 

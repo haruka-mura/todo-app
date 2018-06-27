@@ -4,20 +4,45 @@ class TaskForm
   attr_accessor :title, :description, :user, :team_id, :state
   attr_accessor :begin_at
   attr_accessor :end_at
+  attr_reader :task
 
-  def save
-    task.build_completion_date(begin_at: begin_at) if begin_at.present?
-    task.build_task_due_date(end_at: end_at) if end_at.present?
-    task.save
+  delegate :persisted?, to: :task
+
+  def initialize(task, attributes = {})
+    @task = task
+    super(attributes)
   end
 
-  def task
-    @task ||= Task.new(params)
+  def save
+    @task = Task.new(task_params)
+    @task.build_completion_date(begin_at: begin_at) if begin_at.present?
+    @task.build_task_due_date(end_at: end_at) if end_at.present?
+    @task.save
+  end
+
+  # def task
+  #   @task ||= Task.new(params)
+  # end
+
+  def update
+    task.update(params)
   end
 
   private
 
     def params
+      {
+        title: title,
+        description: description,
+        user: user,
+        team_id: team_id,
+        state: state,
+        # end_at: task_due_date&.end_at,
+        # begin_at: completion_date&.begin_at
+      }
+    end
+
+    def task_params
       { title: title, description: description, user: user, team_id: team_id, state: state }
     end
 end

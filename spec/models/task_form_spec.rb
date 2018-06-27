@@ -16,7 +16,7 @@ RSpec.describe TaskForm, type: :model do
       it { is_expected.to be_truthy }
     end
 
-    context 'saveに失敗する時' do
+    context 'titleが入力されない場合' do
       let(:task_params) { attributes_for :task, title: "", team_id: team.id, end_at: end_at, begin_at: begin_at }
 
       it { is_expected.to be_falsey }

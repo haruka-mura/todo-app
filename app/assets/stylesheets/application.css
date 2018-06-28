@@ -13,3 +13,12 @@
  *= require_tree .
  *= require_self
  */
+
+
+ #tab div {
+   display: none;
+ }
+
+ #tab .selected {
+   display: block;
+ }

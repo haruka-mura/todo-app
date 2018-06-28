@@ -9,19 +9,60 @@
   %b Email:
   = @user.email
 
-%table
-  %thead
-    %tr
-      %th Task ID
-      %th Title
-      %th Description
+%div#menu
+  %ul
+    %li
+      %p 1
+    %li
+      %p 2
+    %li
+      %p 3
+%div#tab
 
-  %tbody
-    - @tasks.each do |task|
-      %tr
-        %td= task.id
-        %td= task.title
-        %td= simple_format(task.description)
+  %div.selected
+    %table
+      %thead
+        %tr
+          %th Task ID
+          %th Title
+          %th Description
+
+      %tbody
+        - @tasks.registered.each do |task|
+          %tr
+            %td= task.id
+            %td= task.title
+            %td= simple_format(task.description)
+  %div
+
+    %table
+      %thead
+        %tr
+          %th Task ID
+          %th Title
+          %th Description
+
+      %tbody
+        - @tasks.assigned.each do |task|
+          %tr
+            %td= task.id
+            %td= task.title
+            %td= simple_format(task.description)
+  %div
+
+    %table
+      %thead
+        %tr
+          %th Task ID
+          %th Title
+          %th Description
+
+      %tbody
+        - @tasks.completed.each do |task|
+          %tr
+            %td= task.id
+            %td= task.title
+            %td= simple_format(task.description)
 
 %br
 

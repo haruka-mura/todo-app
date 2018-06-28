@@ -26,20 +26,26 @@ class TaskForm
 
   def update
     if CompletionDate.exists?(task_id: task.id)
-      # if begin_at.nil?
-      task.completion_date.update(begin_at: begin_at)
+      if begin_at.empty?
+        task.completion_date.destroy
+      else
+        task.completion_date.update(begin_at: begin_at)
+      end
     else
-      task.build_completion_date(begin_at: begin_at)
+        task.build_completion_date(begin_at: begin_at)
     end
 
     if TaskDueDate.exists?(task_id: task.id)
-      task.task_due_date.update(end_at: end_at)
+      if end_at.empty?
+        task.task_due_date.destroy
+      else
+        task.task_due_date.update(end_at: end_at)
+      end
     else
       task.build_task_due_date(end_at: end_at)
     end
 
     task.save
-
     task.update(params)
   end
 

@@ -54,7 +54,6 @@ RSpec.describe TasksController, type: :controller do
     it do
       is_expected.to have_http_status(:ok)
       expect(assigns(:task_form).class).to eq TaskForm
-      expect(assigns(:teams)).to eq user.teams
     end
   end
 

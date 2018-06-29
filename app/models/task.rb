@@ -10,7 +10,16 @@ class Task < ApplicationRecord
 
   enum state: { registered: 0, assigned: 1, completed: 2 }
 
-  scope :with_end_at, -> { joins(:task_due_date) }
   scope :with_begin_at, -> { joins(:completion_date) }
+  scope :with_end_at, -> { joins(:task_due_date) }
 
+  def self.with_no_date
+    scope = self.joins(:task_due_date)
+    scope = self.where(scope.exists.not).all
+    scope
+  end
+
+  # def condition
+  #
+  # end
 end

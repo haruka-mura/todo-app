@@ -28,7 +28,7 @@
           %th Description
 
       %tbody
-        - @tasks.with_end_at.each do |task|
+        - @tasks.with_begin_at.each do |task|
           %tr
             %td= task.id
             %td= task.title
@@ -43,7 +43,7 @@
           %th Description
 
       %tbody
-        - @tasks.with_begin_at.each do |task|
+        - @tasks.with_no_date.each do |task|
           %tr
             %td= task.id
             %td= task.title

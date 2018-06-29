@@ -9,4 +9,8 @@ class Task < ApplicationRecord
   belongs_to :team
 
   enum state: { registered: 0, assigned: 1, completed: 2 }
+
+  scope :with_end_at, -> { joins(:task_due_date) }
+  scope :with_begin_at, -> { joins(:completion_date) }
+
 end

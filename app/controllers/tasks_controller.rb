@@ -13,7 +13,7 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task_form = TaskForm.new(@task, @task.form_params)
+    @task_form = TaskForm.new(task_params.merge(task: @task))
   end
 
   def create
@@ -27,8 +27,8 @@ class TasksController < ApplicationController
   end
 
   def update
-    @task_form = TaskForm.new(@task, task_form_params.merge(user: current_user))
-    if @task_form.update
+    @task_form = TaskForm.new(task_form_params.merge(user: current_user, task: @task))
+    if @task_form.save
       redirect_to task_path, notice: 'Task was successfully updated.'
     else
       render :edit
@@ -43,5 +43,17 @@ class TasksController < ApplicationController
 
   def task_form_params
     params.require(:task_form).permit(:title, :description, :end_at, :begin_at, :team_id, :state)
+  end
+
+  def task_params
+    {
+      title: @task.title,
+      description: @task.description,
+      user: @task.user_id,
+      team_id: @task.team_id,
+      state: @task.state,
+      end_at: @task.task_due_date&.end_at,
+      begin_at: @task.completion_date&.begin_at
+    }
   end
 end

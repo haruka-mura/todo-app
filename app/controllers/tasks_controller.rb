@@ -27,7 +27,7 @@ class TasksController < ApplicationController
   end
 
   def update
-    @task_form = TaskForm.new(task_form_params.merge(user: current_user, task: @task))
+    @task_form = TaskForm.new(task_form_params.merge(user_id: current_user, task: @task))
     if @task_form.save
       redirect_to task_path, notice: 'Task was successfully updated.'
     else
@@ -49,7 +49,7 @@ class TasksController < ApplicationController
     {
       title: @task.title,
       description: @task.description,
-      user: @task.user_id,
+      user_id: @task.user_id,
       team_id: @task.team_id,
       state: @task.state,
       end_at: @task.task_due_date&.end_at,

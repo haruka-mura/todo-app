@@ -59,7 +59,6 @@ RSpec.describe TasksController, type: :controller do
 
   describe "#create" do
     subject do
-      binding.pry
       post :create, params: { task_form: task_params}
     end
 
@@ -77,17 +76,17 @@ RSpec.describe TasksController, type: :controller do
         it :aggregate_failures do
           expect { subject }.to change { Task.count }.by(1)
           expect(response).to redirect_to(Task.last)
-          expect(assigns(:task_form).user.id).to eq user.id
+          expect(assigns(:task_form).user_id).to eq user.id
         end
       end
 
       context "with invalid params" do
-        let(:task_params) { attributes_for :task, title: "", team_id: team.id, end_at: end_at, begin_at: begin_at }
+        let(:task_params) { attributes_for :task, title: "", team_id: team.id, end_at: end_at[:end_at], begin_at: begin_at[:begin_at] }
 
         it do
           expect { subject }.not_to change { Task.count }
           expect(response).to render_template :new
-          expect(assigns(:task_form).user.id).to eq user.id
+          expect(assigns(:task_form).user_id).to eq user.id
         end
       end
     end

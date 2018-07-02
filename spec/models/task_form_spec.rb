@@ -9,7 +9,7 @@ RSpec.describe TaskForm, type: :model do
     let(:begin_at) { Time.zone.now }
     let(:end_at) { Time.zone.now }
     let(:task_params) { attributes_for :task, team_id: team.id, end_at: end_at, begin_at: begin_at }
-    let(:task_form) { TaskForm.new(task_params.merge(user_id: user)) }
+    let(:task_form) { TaskForm.new(task_params.merge(user_id: user.id)) }
 
     context 'saveに成功する時' do
 

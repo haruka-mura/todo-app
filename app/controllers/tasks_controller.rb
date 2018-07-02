@@ -17,7 +17,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task_form = TaskForm.new task_form_params.merge(user_id: current_user)
+    @task_form = TaskForm.new task_form_params.merge(user_id: current_user[:id])
 
     if @task_form.save
       redirect_to @task_form.task, notice: 'task was successfully created.'
@@ -27,7 +27,7 @@ class TasksController < ApplicationController
   end
 
   def update
-    @task_form = TaskForm.new(task_form_params.merge(user_id: current_user, task: @task))
+    @task_form = TaskForm.new(task_form_params.merge(user_id: current_user[:id], task: @task))
     if @task_form.save
       redirect_to task_path, notice: 'Task was successfully updated.'
     else

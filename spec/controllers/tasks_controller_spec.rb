@@ -58,11 +58,15 @@ RSpec.describe TasksController, type: :controller do
   end
 
   describe "#create" do
-    subject { post :create, params: { task_form: task_params} }
+    subject do
+      binding.pry
+      post :create, params: { task_form: task_params}
+    end
 
     let(:user) { create(:user) }
     let(:team) { create(:team, users: [user]) }
-    let(:task_params) { attributes_for :task, team_id: team.id, end_at: end_at, begin_at: begin_at }
+    let(:params) { attributes_for :task, team_id: team.id }
+    let(:task_params) { params.merge(user_id: user, end_at: end_at[:end_at], begin_at: begin_at[:begin_at]) }
     let(:begin_at) { attributes_for :completion_date }
     let(:end_at) { attributes_for :task_due_date }
 

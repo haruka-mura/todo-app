@@ -5,6 +5,7 @@ class TaskForm
   delegate :persisted?, to: :task
 
   def save
+    
     new_or_update_or_destroy_task_due_date(end_at)
     new_or_update_or_destroy_completion_date(begin_at)
 
@@ -16,12 +17,11 @@ class TaskForm
   end
 
   def new_or_update_or_destroy_task_due_date(end_at)
-    return task.task_due_date&.destroy if end_at.empty?
+    return task.task_due_date&.destroy if end_at&.empty?
 
       t_date = TaskDueDate.find_or_initialize_by(task_id: task.id)
       t_date.end_at = end_at
       task.task_due_date = t_date
-    end
   end
 
   def new_or_update_or_destroy_completion_date(begin_at)
@@ -30,7 +30,6 @@ class TaskForm
       c_date = CompletionDate.find_or_initialize_by(task_id: task.id)
       c_date.begin_at = begin_at
       task.completion_date = c_date
-    end
   end
 
   private
